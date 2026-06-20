@@ -29,6 +29,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
         $token = Auth::login($user);
 
         return response()->json([
@@ -56,13 +57,21 @@ class AuthController extends Controller
             'user' => auth()->User,
         ]);
     }
-    public function logout(Request $request){
+
+    public function logout(){
         Auth::logout();
 
         return response()->json([
             'status'=> true,
             'message'=> 'Logout Successfully',
         ]);
-
+    }
+    
+    public function refresh(){
+        return response()->json([
+            'status'=> true,
+            'token' => Auth::refresh(),
+            'type'=> 'bearer',
+        ]);
     }
 }
