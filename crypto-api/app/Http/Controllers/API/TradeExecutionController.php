@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\AddTrade;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -37,5 +36,9 @@ class TradeExecutionController extends Controller
             'data' => $data,
         ],200);
 
+    }
+
+    public function updateTrade(){
+        
     }
 }
