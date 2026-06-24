@@ -8,5 +8,10 @@ Route::prefix('user')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login',[AuthController::class, 'login']);
     Route::post('logout',[AuthController::class,'logout']);
-    Route::post('addtrade',[TradeExecutionController::class,'addTrade']);
+
+    Route::middleware('jwt.auth')->group(function() {
+        Route::post('addtrade',[TradeExecutionController::class,'addTrade']);
+        Route::put('updateTrade/$id',[TradeExecutionController::class,'updateUserTrade']);
+    });
+    
 });
