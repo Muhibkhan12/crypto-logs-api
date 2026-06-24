@@ -49,7 +49,7 @@ class TradeExecutionController extends Controller
     }
 
     public function updateUserTrade(Request $request, $id){
-        $data = addTrade::findorFail($id);
+        $data = addTrade::where('id',$id)->where('user_id',$id)->first();
         $validated = Validator::make($request->all(),[
             'user_id' => 'required|integer',
             'coin' => 'required|string',
@@ -60,8 +60,14 @@ class TradeExecutionController extends Controller
             'opened_at' => 'nullable|date',
             'closed_at' => 'nullable|date',
         ]);
+        if(!$validated->fails()){
+            return response()->json([
+                'status' => true,
+                'error' => $validated->errors(),
+            ],400);
+        }
 
-        $data->update($validated);
+        $data->update($validated->validated());
 
         return response()->json([
             'status' => True,
